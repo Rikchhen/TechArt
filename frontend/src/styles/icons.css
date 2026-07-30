@@ -1,0 +1,169 @@
+/* =====================================================================
+   Icon + UI cleanup layer (loaded after components.css so these win)
+   ===================================================================== */
+
+/* Brand logo mark */
+.brand-logo {
+  display: inline-flex;
+  color: var(--color-primary);
+}
+.brand-logo svg {
+  display: block;
+}
+.brand {
+  gap: 0.55rem;
+}
+
+/* Wordmark: "TECH" bold + "ART" light, matching the logo lockup. */
+.brand-name {
+  font-family: var(--font-head);
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  line-height: 1;
+}
+.brand-tech {
+  font-weight: 700;
+}
+.brand-art {
+  font-weight: 400;
+}
+
+/* Icons inherit text colour and never shrink in flex rows */
+.btn svg,
+.icon-btn svg,
+.qty-btn svg,
+.pill svg {
+  flex-shrink: 0;
+}
+
+/* Quantity steppers now render icons — center them */
+.qty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink);
+}
+
+/* Cart remove is an icon button */
+.cart-item-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Search field with a leading icon */
+.filter-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 240px;
+}
+.filter-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+.filter-search .input {
+  padding-left: 2.4rem;
+}
+
+/* Profile chip in the header */
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.15s ease;
+}
+.user-chip:hover {
+  background: var(--color-surface-2);
+}
+.user-chip.active {
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+}
+
+/* FAQ chevron rotates when the item is open */
+.faq-chevron {
+  display: inline-flex;
+  color: var(--color-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.faq-chevron.is-open {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+/* Toasts: leading status icon */
+.toast {
+  align-items: flex-start;
+}
+.toast-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.toast-message {
+  flex: 1;
+}
+.toast-success .toast-icon {
+  color: var(--color-success);
+}
+.toast-error .toast-icon {
+  color: var(--color-danger);
+}
+.toast-info .toast-icon {
+  color: var(--color-info);
+}
+.toast-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Footer brand block */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ---- General cleanliness pass ---- */
+
+/* Calmer, more consistent card hover */
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+}
+
+/* Slightly roomier icon buttons with a clear hover target */
+.icon-btn {
+  color: var(--color-muted);
+}
+.icon-btn:hover {
+  color: var(--color-ink);
+}
+
+/* Wishlist heart on cards: clearer active state */
+.wishlist-toggle svg {
+  transition: transform 0.1s ease;
+}
+
+/* Row action buttons keep icon + label tight */
+.row-actions .btn {
+  gap: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  /* Keep the header compact: icon-only sign-out, hidden first name */
+  .sign-out-label {
+    display: none;
+  }
+}
