@@ -1,0 +1,96 @@
+@baseUrl = http://localhost:5000/api
+
+### Register a new customer
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Priya Test",
+  "email": "priya@example.com",
+  "password": "password123"
+}
+
+### Login (sets the session cookie the client stores)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "priya@example.com",
+  "password": "password123"
+}
+
+### Who am I (uses the session cookie)
+GET {{baseUrl}}/auth/me
+
+### View own profile
+GET {{baseUrl}}/users/me/profile
+
+### Update own profile (name only)
+PATCH {{baseUrl}}/users/me/profile
+Content-Type: application/json
+
+{
+  "name": "Priya Updated"
+}
+
+### List products (public)
+GET {{baseUrl}}/products
+
+### Get one product (replace the id)
+GET {{baseUrl}}/products/PRODUCT_ID_HERE
+
+### Customer tries to create a product -> expect 403
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Should Fail",
+  "description": "Customer is not allowed to create products",
+  "category": "accessory",
+  "price": 9.99,
+  "stock": 5
+}
+
+### Create an order (prices come from the server, never the client)
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": "PRODUCT_ID_HERE", "quantity": 2 }
+  ]
+}
+
+### List my orders
+GET {{baseUrl}}/orders/mine
+
+### ---------------------------------------------------------------
+### Admin flow: log in as the seeded admin, then manage products
+### ---------------------------------------------------------------
+
+### Admin login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@gadgetstore.local",
+  "password": "admin1234"
+}
+
+### Admin creates a product -> expect 201
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Titan Wireless Mouse",
+  "description": "Ergonomic 2.4GHz mouse with silent clicks.",
+  "category": "accessory",
+  "price": 24.99,
+  "stock": 40
+}
+
+### Admin lists all orders -> expect 200 (customers get 403)
+GET {{baseUrl}}/orders
+
+### Logout
+POST {{baseUrl}}/auth/logout
