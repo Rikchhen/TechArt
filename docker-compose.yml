@@ -1,0 +1,49 @@
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    # Reuse the same application configuration used outside Docker. Values
+    # below override only networking/local-container concerns.
+    env_file:
+      - ./backend/.env
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/techart
+      CLIENT_ORIGIN: https://localhost:8080
+      APP_URL: https://localhost:8080
+      TRUST_PROXY: 1
+      COOKIE_SECURE: "true"
+    volumes:
+      - uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:443"
+    volumes:
+      # Mount the TLS certs so nginx can terminate HTTPS. Same certs as dev.
+      - ./certs:/etc/nginx/certs:ro
+
+volumes:
+  mongo_data:
+  uploads:
