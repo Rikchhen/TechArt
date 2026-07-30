@@ -1,0 +1,212 @@
+/* =====================================================================
+   Security UI: 2FA login step, Profile security panel, sessions
+   ===================================================================== */
+
+.auth-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+/* ---- Unverified-email banner ---- */
+.verify-banner {
+  background: var(--color-warn-tint);
+  color: var(--color-warn);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-warn) 30%, transparent);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.verify-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-block: 0.6rem;
+  flex-wrap: wrap;
+}
+.verify-banner-btn {
+  margin-left: auto;
+  background: var(--color-warn);
+  color: #fff;
+  border: none;
+}
+.verify-banner-btn:hover {
+  filter: brightness(0.94);
+}
+
+.code-input {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  letter-spacing: 0.25em;
+  text-align: center;
+}
+
+/* ---- Security card ---- */
+.security-card {
+  padding: 1.75rem;
+  margin-top: 1.5rem;
+  max-width: 640px;
+}
+.security-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
+  margin-bottom: 1.25rem;
+}
+.security-block h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+.security-block > p {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+}
+.security-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 1.5rem 0;
+}
+.security-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+.security-on {
+  background: var(--color-success-tint);
+  color: var(--color-success);
+}
+.security-off {
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+}
+.security-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+.security-inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 340px;
+}
+.security-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 380px;
+}
+.security-form .btn {
+  align-self: flex-start;
+}
+
+/* ---- 2FA setup ---- */
+.twofa-setup {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.twofa-qr {
+  width: 168px;
+  height: 168px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: #fff;
+  padding: 6px;
+}
+.twofa-manual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+}
+.twofa-secret {
+  font-size: 0.95rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  word-break: break-all;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Backup codes ---- */
+.backup-codes {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1.25rem;
+}
+.backup-codes li {
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+
+/* ---- Sessions ---- */
+.session-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.session-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.session-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+.session-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.session-ua {
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.session-current {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+}
+.session-meta {
+  font-size: 0.8rem;
+}
