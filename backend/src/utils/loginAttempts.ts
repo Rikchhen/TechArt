@@ -10,7 +10,7 @@ import { logger } from "./logger";
   Note: account lockout can be abused to lock a known victim's account; the short
   window plus IP rate limiting keeps that impact bounded.
 */
-const MAX_FAILURES = 5;
+const MAX_FAILURES = 15;
 const LOCK_MS = 15 * 60 * 1000;
 
 interface Entry {

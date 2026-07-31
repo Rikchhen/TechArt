@@ -3,6 +3,7 @@ import { useEffect, useId, useRef } from 'react'
 declare global {
   interface Window {
     grecaptcha?: {
+      ready: (cb: () => void) => void
       render: (element: string | HTMLElement, options: {
         sitekey: string
         callback: (token: string) => void
@@ -15,7 +16,7 @@ declare global {
 let loader: Promise<void> | undefined
 
 function loadRecaptcha() {
-  if (window.grecaptcha) return Promise.resolve()
+  if (window.grecaptcha?.render) return Promise.resolve()
   if (!loader) {
     loader = new Promise((resolve, reject) => {
       const script = document.createElement('script')
@@ -36,17 +37,33 @@ export function Recaptcha({ siteKey, onToken }: { siteKey?: string; onToken: (to
 
   useEffect(() => {
     if (!siteKey || rendered.current) return
+    let cancelled = false
+
+    const doRender = () => {
+      if (cancelled || rendered.current || !window.grecaptcha) return
+      const el = document.getElementById(elementId)
+      if (!el) return
+      window.grecaptcha.render(el, {
+        sitekey: siteKey,
+        callback: onToken,
+        'expired-callback': () => onToken(undefined),
+      })
+      rendered.current = true
+    }
+
     loadRecaptcha()
       .then(() => {
-        if (rendered.current || !window.grecaptcha) return
-        window.grecaptcha.render(elementId, {
-          sitekey: siteKey,
-          callback: onToken,
-          'expired-callback': () => onToken(undefined),
-        })
-        rendered.current = true
+        // The script's onload fires before the API is fully initialized, so
+        // calling render() immediately throws and leaves an empty box. ready()
+        // defers until grecaptcha is actually usable.
+        if (window.grecaptcha?.ready) window.grecaptcha.ready(doRender)
+        else doRender()
       })
       .catch(() => onToken(undefined))
+
+    return () => {
+      cancelled = true
+    }
   }, [elementId, onToken, siteKey])
 
   if (!siteKey) return null

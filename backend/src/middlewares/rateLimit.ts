@@ -18,9 +18,11 @@ export const apiLimiter = rateLimit({
 });
 
 // Strict limiter for credential endpoints (login / register) to slow brute force.
+// Set above the per-account lockout threshold (15) so the account lockout is the
+// effective limit a single account hits, not this per-IP net.
 export const authLimiter = rateLimit({
   windowMs: fifteenMinutes,
-  limit: 10,
+  limit: 30,
   standardHeaders: "draft-7",
   legacyHeaders: false,
   message: { message: "Too many attempts, please try again in a few minutes." },
